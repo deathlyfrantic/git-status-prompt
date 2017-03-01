@@ -102,10 +102,9 @@ int branch_name(git_repository *repo, char *name) {
         name[length] = '\0';
     } else {
         const char *tmp = strdup(git_reference_symbolic_target(ref));
-        const char *loc = strrchr(tmp, '/');
 
-        if (loc) {
-            strcpy(name, loc + 1);
+        if (strchr(tmp, '/')) {
+            strcpy(name, strrchr(tmp, '/') + 1);
         }
     }
 

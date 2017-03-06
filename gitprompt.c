@@ -177,8 +177,7 @@ int status_cb(const char *path, unsigned int flags, void *payload) {
 int main() {
     git_libgit2_init();
     git_repository *repo = NULL;
-    git_buf *buf = malloc(sizeof(git_buf));
-    memset(buf, 0, sizeof(git_buf));
+    git_buf *buf = calloc(1, sizeof(git_buf));
 
     if (git_repository_discover(buf, ".", 1, "/") != 0) {
         goto cleanup;

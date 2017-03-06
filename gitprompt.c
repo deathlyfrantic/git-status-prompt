@@ -176,9 +176,15 @@ int status_cb(const char *path, unsigned int flags, void *payload) {
 
 int main() {
     git_libgit2_init();
-    git_repository *repo;
+    git_repository *repo = NULL;
+    git_buf *buf = malloc(sizeof(git_buf));
+    memset(buf, 0, sizeof(git_buf));
 
-    if (git_repository_open(&repo, ".") != 0) {
+    if (git_repository_discover(buf, ".", 1, "/") != 0) {
+        goto cleanup;
+    }
+
+    if (git_repository_open(&repo, buf->ptr) != 0) {
         goto cleanup;
     }
 
@@ -234,6 +240,7 @@ int main() {
     printf(STATUS_SUFFIX "\n");
 
 cleanup:
+    git_buf_free(buf);
     git_repository_free(repo);
     git_libgit2_shutdown();
     return 0;

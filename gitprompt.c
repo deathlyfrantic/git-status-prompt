@@ -17,7 +17,6 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 // OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#include <assert.h>
 #include <git2.h>
 #include <string.h>
 #include <stdio.h>
@@ -145,7 +144,6 @@ int ahead_behind(git_repository *repo, size_t *ahead, size_t *behind) {
 
 int status_cb(const char *path, unsigned int flags, void *payload) {
     struct status_counts *status = (struct status_counts *)payload;
-    assert(path); // prevent unused-parameter warning
 
     if (flags & GIT_STATUS_IGNORED) {
         return 0;
